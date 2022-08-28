@@ -23,14 +23,14 @@ public class PersonaController {
         return ipersonaService.getPersona();
     }
     
-    @PostMapping("/personas/crear")
+    @PostMapping("personas/crear")
     public String createPersona(@RequestBody Persona persona){
         System.out.println("CREANDO...");
         ipersonaService.savePersona(persona);
         return "La persona se creó correctamente";
     }
     
-    @DeleteMapping("/personas/borrar/{id}")
+    @DeleteMapping("personas/borrar/{id}")
     public String deletePersona(@PathVariable Long id){
         System.out.println("BORRANDO...");
         ipersonaService.deletePersona(id);
@@ -38,7 +38,7 @@ public class PersonaController {
     }
     
     //PUERTO/personas/editar/<id>/<nombre>&<apellido>&<img>
-    @PutMapping("/personas/editar/{id}")
+    @PutMapping("personas/editar/{id}")
     public Persona editPersona(@PathVariable Long id,
                                 @RequestParam("nombre") String nuevoNombre,
                                 @RequestParam("apellido") String nuevoApellido,
@@ -53,4 +53,8 @@ public class PersonaController {
         return persona;
     }
     
+    @GetMapping("personas/traer/perfil")
+    public Persona findPersona(){
+        return ipersonaService.findPersona((long)1);
+    }
 }
