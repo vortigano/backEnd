@@ -13,4 +13,40 @@ public class Experiencia {
     private String nombreE;
     private String descripcionE;
     
+    //constructores
+
+    public Experiencia() {
+    }
+
+    public Experiencia(String nombreE, String descripcionE) {
+        this.nombreE = nombreE;
+        this.descripcionE = descripcionE;
+    }
+    
+    //Getter & Setter
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombreE() {
+        return nombreE;
+    }
+
+    public void setNombreE(String nombreE) {
+        this.nombreE = nombreE;
+    }
+
+    public String getDescripcionE() {
+        return descripcionE;
+    }
+
+    public void setDescripcionE(String descripcionE) {
+        this.descripcionE = descripcionE;
+    }
+    
 }
