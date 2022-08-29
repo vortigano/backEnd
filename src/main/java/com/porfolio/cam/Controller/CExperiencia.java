@@ -56,7 +56,7 @@ public class CExperiencia {
             return new ResponseEntity(new Mensaje("El id no existe"), HttpStatus.BAD_REQUEST);
         
         //compara nombres de las experiencias
-        if(!sExperiencia.existsByNombreE(dtoExp.getNombreE()) && 
+        if(sExperiencia.existsByNombreE(dtoExp.getNombreE()) && 
                 sExperiencia.getByNombreE(dtoExp.getNombreE()).get().getId() != id){
             return new ResponseEntity(new Mensaje("Esa experiencia ya existe"), HttpStatus.BAD_REQUEST);
         }
@@ -64,6 +64,8 @@ public class CExperiencia {
         if(StringUtils.isBlank(dtoExp.getNombreE()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         //finalmente actualiza el dato
+        System.out.println(dtoExp.getNombreE());
+        System.out.println(dtoExp.getDescripcionE());
         Experiencia experiencia = sExperiencia.getOne(id).get();
         experiencia.setNombreE(dtoExp.getNombreE());
         experiencia.setDescripcionE(dtoExp.getDescripcionE());
