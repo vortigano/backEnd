@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class PersonaController {
         return ipersonaService.getPersona();
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("personas/crear")
     public String createPersona(@RequestBody Persona persona){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -36,6 +38,7 @@ public class PersonaController {
         return "La persona se creó correctamente";
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("personas/borrar/{id}")
     public String deletePersona(@PathVariable Long id){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -44,6 +47,7 @@ public class PersonaController {
         return "La persona fue eliminada correctamente";
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     //PUERTO/personas/editar/<id>/<nombre>&<apellido>&<img>
     @PutMapping("personas/editar/{id}")
     public Persona editPersona(@PathVariable Long id,
@@ -60,11 +64,11 @@ public class PersonaController {
         ipersonaService.savePersona(persona);
         return persona;
     }
-    
+    /*
     @GetMapping("personas/traer/perfil")
     public Persona findPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - Trayendo perfil...");
         return ipersonaService.findPersona((long)1);
-    }
+    }*/
 }
