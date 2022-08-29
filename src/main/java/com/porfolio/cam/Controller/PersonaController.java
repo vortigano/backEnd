@@ -64,11 +64,11 @@ public class PersonaController {
         ipersonaService.savePersona(persona);
         return persona;
     }
-    /*
+    
     @GetMapping("personas/traer/perfil")
     public Persona findPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - Trayendo perfil...");
         return ipersonaService.findPersona((long)1);
-    }*/
+    }
 }
