@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"${settings.cors_origin}"})
 public class PersonaController {
     @Autowired IPersonaService ipersonaService;
     
@@ -65,7 +65,8 @@ public class PersonaController {
         return persona;
     }
     
-    @GetMapping("personas/traer/perfil")
+    //@GetMapping("personas/traer/perfil")
+    @GetMapping("${api.persona_perfil.get}")
     public Persona findPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - Trayendo perfil...");

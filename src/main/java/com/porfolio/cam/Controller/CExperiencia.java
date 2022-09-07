@@ -20,14 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/explab")
-@CrossOrigin(origins = "http://localhost:4200")
+//@RequestMapping("/explab")
+@RequestMapping("${api.experiencia}")
+@CrossOrigin(origins = {"${settings.cors_origin}"})
 public class CExperiencia {
     @Autowired
     SExperiencia sExperiencia;
     
     //trae la lista
-    @GetMapping("/lista")
+    //@GetMapping("/lista")
+    @GetMapping("${api.experiencia.get}")
     public ResponseEntity<List<Experiencia>> list(){
         List<Experiencia> list= sExperiencia.list();
         return new ResponseEntity(list, HttpStatus.OK);
@@ -48,7 +50,8 @@ public class CExperiencia {
     }
     
     //actualiza la lista
-    @PutMapping("/update/{id}")
+    //@PutMapping("/update/{id}")
+    @PutMapping("${api.experiencia.update}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DtoExperiencia dtoExp){
         //validación antes de actualizar
         //valida el ID
@@ -75,7 +78,8 @@ public class CExperiencia {
     }
     
     //borrar dato
-    @DeleteMapping("/delete/{id}")
+    //@DeleteMapping("/delete/{id}")
+    @DeleteMapping("${api.experiencia.delete}")
     public ResponseEntity<?> delete(@PathVariable("id") int id){
         //valida el ID
         if(!sExperiencia.existsById(id))
