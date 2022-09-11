@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/educacion")
-@CrossOrigin(origins = {"${settings.cors_origin}"})
+@CrossOrigin(origins = {"${settings.cors_origin.remote}"})
 public class CEducacion {
     @Autowired
     Seducacion sEducacion;
