@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 //@RequestMapping("/explab")
 @RequestMapping("${api.experiencia}")
-@CrossOrigin(origins = {"${settings.cors_origin.remote}"})
+@CrossOrigin(origins = {"${settings.cors_origin.remote}","${settings.cors_origin.local}"})
 public class CExperiencia {
     @Autowired
     SExperiencia sExperiencia;
