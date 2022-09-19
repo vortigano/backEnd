@@ -6,12 +6,12 @@ public class DtoHardSoftSkill {
     @NotBlank
     private String nombre;
     @NotBlank
-    private float porcentaje;
+    private String porcentaje;
 
     public DtoHardSoftSkill() {
     }
 
-    public DtoHardSoftSkill(String nombre, int porcentaje) {
+    public DtoHardSoftSkill(String nombre, String porcentaje) {
         this.nombre = nombre;
         this.porcentaje = porcentaje;
     }
@@ -24,11 +24,11 @@ public class DtoHardSoftSkill {
         this.nombre = nombre;
     }
 
-    public float getPorcentaje() {
+    public String getPorcentaje() {
         return porcentaje;
     }
 
-    public void setPorcentaje(int porcentaje) {
+    public void setPorcentaje(String porcentaje) {
         this.porcentaje = porcentaje;
     }
 }

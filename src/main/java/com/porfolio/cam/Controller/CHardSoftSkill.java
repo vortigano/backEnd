@@ -61,7 +61,7 @@ public class CHardSoftSkill {
         if(sHardSoftSkill.existsByNombre(dtoSkill.getNombre()))
             return new ResponseEntity(new Mensaje("Esa habilidad ya existe"), HttpStatus.BAD_REQUEST);
         //si pasa todas estas validaciones...
-        HardSoftSkill skill = new HardSoftSkill(dtoSkill.getNombre(), dtoSkill.getPorcentaje());
+        HardSoftSkill skill = new HardSoftSkill(dtoSkill.getNombre(),dtoSkill.getPorcentaje() );
         sHardSoftSkill.save(skill);
         
         return new ResponseEntity(new Mensaje("Experiencia agregada"), HttpStatus.OK);
@@ -83,25 +83,27 @@ public class CHardSoftSkill {
         //no puede estar en blanco (nombre)
         if(StringUtils.isBlank(dtoSkill.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        //TODO:
-        //no puede estar en blanco/nulo (porcentaje) y debería prevenir tipo de dato no numerico
+        //no puede estar en blanco (porcentaje) ni ser menor que cero o mayor que cien
+        System.out.format("Valor > %s < \n", dtoSkill.getPorcentaje());
+        System.err.println("pos-1");
+        if(StringUtils.isBlank(dtoSkill.getPorcentaje()))
+            return new ResponseEntity(new Mensaje("El porcentaje no puede estar en blanco"), HttpStatus.BAD_REQUEST);
+        //check formato de argumento porcentaje, esperando formato decimal
         try{
-            float es_un_numero = dtoSkill.getPorcentaje();
-            System.out.format("Porcentaje ingresado: %f", es_un_numero);
-        }catch(java.lang.NumberFormatException e)
-        {
-            return new ResponseEntity(new Mensaje("Formato de porcentaje incorrecto"), HttpStatus.BAD_REQUEST);
-        }catch(java.lang.NullPointerException e)
-        {
-            return new ResponseEntity(new Mensaje("El porcentaje no puede estar vacío"), HttpStatus.BAD_REQUEST);
+            Double.parseDouble(dtoSkill.getPorcentaje());
+        }catch(NumberFormatException e){
+            System.err.println("Formato de porcentaje no válido");
+            return new ResponseEntity(new Mensaje("Formato de porcentaje no válido"), HttpStatus.BAD_REQUEST);
+            //not double
         }
-        
-        //finalmente actualiza el dato
+        //0<=x<=100
+        if(Double.valueOf(dtoSkill.getPorcentaje())<0 || Double.valueOf(dtoSkill.getPorcentaje())>100)
+            return new ResponseEntity(new Mensaje("El porcentaje está fuera de rango"), HttpStatus.BAD_REQUEST);
+        System.out.println("El porcentaje está fuera de rango");
         
         HardSoftSkill skill = sHardSoftSkill.getOne(id).get();
         skill.setNombre(dtoSkill.getNombre());
         skill.setPorcentaje(dtoSkill.getPorcentaje());
-        
         sHardSoftSkill.save(skill);
         return new ResponseEntity(new Mensaje("Habilidad actualizada"), HttpStatus.OK);
     }

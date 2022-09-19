@@ -11,12 +11,12 @@ public class HardSoftSkill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
-    private float porcentaje;
+    private String porcentaje;
 
     public HardSoftSkill() {
     }
 
-    public HardSoftSkill(String nombre, float porcentaje) {
+    public HardSoftSkill(String nombre, String porcentaje) {
         this.nombre = nombre;
         this.porcentaje = porcentaje;
     }
@@ -37,11 +37,11 @@ public class HardSoftSkill {
         this.nombre = nombre;
     }
 
-    public float getPorcentaje() {
+    public String getPorcentaje() {
         return porcentaje;
     }
 
-    public void setPorcentaje(float porcentaje) {
+    public void setPorcentaje(String porcentaje) {
         this.porcentaje = porcentaje;
     }
     
