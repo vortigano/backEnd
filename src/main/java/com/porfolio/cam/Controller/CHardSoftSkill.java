@@ -99,7 +99,6 @@ public class CHardSoftSkill {
         //0<=x<=100
         if(Double.valueOf(dtoSkill.getPorcentaje())<0 || Double.valueOf(dtoSkill.getPorcentaje())>100)
             return new ResponseEntity(new Mensaje("El porcentaje está fuera de rango"), HttpStatus.BAD_REQUEST);
-        System.out.println("El porcentaje está fuera de rango");
         
         HardSoftSkill skill = sHardSoftSkill.getOne(id).get();
         skill.setNombre(dtoSkill.getNombre());
