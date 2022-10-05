@@ -61,7 +61,9 @@ public class CHardSoftSkill {
         if(sHardSoftSkill.existsByNombre(dtoSkill.getNombre()))
             return new ResponseEntity(new Mensaje("Esa habilidad ya existe"), HttpStatus.BAD_REQUEST);
         //si pasa todas estas validaciones...
-        HardSoftSkill skill = new HardSoftSkill(dtoSkill.getNombre(),dtoSkill.getPorcentaje() );
+        HardSoftSkill skill = new HardSoftSkill(dtoSkill.getNombre(),
+                                                dtoSkill.getPorcentaje(),
+                                                dtoSkill.getImg_url());
         sHardSoftSkill.save(skill);
         
         return new ResponseEntity(new Mensaje("Experiencia agregada"), HttpStatus.OK);
@@ -100,9 +102,18 @@ public class CHardSoftSkill {
         if(Double.valueOf(dtoSkill.getPorcentaje())<0 || Double.valueOf(dtoSkill.getPorcentaje())>100)
             return new ResponseEntity(new Mensaje("El porcentaje está fuera de rango"), HttpStatus.BAD_REQUEST);
         
+        //la imgUrl PUEDE estar vacía por lo tanto no hago valicadiones
+        
+        
         HardSoftSkill skill = sHardSoftSkill.getOne(id).get();
         skill.setNombre(dtoSkill.getNombre());
         skill.setPorcentaje(dtoSkill.getPorcentaje());
+        skill.setImg_url(dtoSkill.getImg_url());
+        //skill.setImgUrl("cadena desde cóidog server...");
+        
+        System.out.format("valor imgUrl recibido: %s\n", dtoSkill.getImg_url());
+        System.out.format("valor seteado en skill imgUrl: %s\n", skill.getImg_url());
+        
         sHardSoftSkill.save(skill);
         return new ResponseEntity(new Mensaje("Habilidad actualizada"), HttpStatus.OK);
     }

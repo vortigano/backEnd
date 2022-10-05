@@ -12,13 +12,15 @@ public class HardSoftSkill {
     private int id;
     private String nombre;
     private String porcentaje;
+    private String img_url;
 
     public HardSoftSkill() {
     }
 
-    public HardSoftSkill(String nombre, String porcentaje) {
+    public HardSoftSkill(String nombre, String porcentaje, String img_url) {
         this.nombre = nombre;
         this.porcentaje = porcentaje;
+        this.img_url = img_url;
     }
 
     public int getId() {
@@ -45,5 +47,11 @@ public class HardSoftSkill {
         this.porcentaje = porcentaje;
     }
     
+    public String getImg_url(){
+        return img_url;
+    }
     
+    public void setImg_url(String img_url){
+        this.img_url = img_url;
+    }
 }
