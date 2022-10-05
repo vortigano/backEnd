@@ -7,13 +7,16 @@ public class DtoHardSoftSkill {
     private String nombre;
     @NotBlank
     private String porcentaje;
-
+    
+    private String img_url;
+    
     public DtoHardSoftSkill() {
     }
 
-    public DtoHardSoftSkill(String nombre, String porcentaje) {
+    public DtoHardSoftSkill(String nombre, String porcentaje, String img_url) {
         this.nombre = nombre;
         this.porcentaje = porcentaje;
+        this.img_url = img_url;
     }
 
     public String getNombre() {
@@ -30,5 +33,13 @@ public class DtoHardSoftSkill {
 
     public void setPorcentaje(String porcentaje) {
         this.porcentaje = porcentaje;
+    }
+    
+    public String getImg_url(){
+        return img_url;
+    }
+    
+    public void setImg_url(String img_url){
+        this.img_url = img_url;
     }
 }
