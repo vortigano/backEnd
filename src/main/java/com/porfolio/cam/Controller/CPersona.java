@@ -1,7 +1,7 @@
 package com.porfolio.cam.Controller;
 
 import com.porfolio.cam.Entity.Persona;
-import com.porfolio.cam.Interface.IPersonaService;
+import com.porfolio.cam.Service.SPersona;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = {"${settings.cors_origin.remote}","${settings.cors_origin.local}"})
-public class PersonaController {
-    @Autowired IPersonaService ipersonaService;
+public class CPersona {
+    @Autowired SPersona spersona;
     
     @GetMapping("personas/traer")
     public List<Persona> getPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - TRAYENDO...");
-        return ipersonaService.getPersona();
+        return spersona.getPersona();
     }
     
     @PreAuthorize("hasRole('ADMIN')")
@@ -34,7 +34,7 @@ public class PersonaController {
     public String createPersona(@RequestBody Persona persona){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - CREANDO...");
-        ipersonaService.savePersona(persona);
+        spersona.savePersona(persona);
         return "La persona se creó correctamente";
     }
     
@@ -43,7 +43,7 @@ public class PersonaController {
     public String deletePersona(@PathVariable Long id){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - BORRANDO...");
-        ipersonaService.deletePersona(id);
+        spersona.deletePersona(id);
         return "La persona fue eliminada correctamente";
     }
     
@@ -56,12 +56,12 @@ public class PersonaController {
                                 @RequestParam("img") String nuevaImg){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - EDITADO...");
-        Persona persona = ipersonaService.findPersona(id);
+        Persona persona = spersona.findPersona(id);
         persona.setNombre(nuevoNombre);
         persona.setApellido(nuevoApellido);
         persona.setImg(nuevaImg);
         
-        ipersonaService.savePersona(persona);
+        spersona.savePersona(persona);
         return persona;
     }
     
@@ -70,6 +70,6 @@ public class PersonaController {
     public Persona findPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - Trayendo perfil...");
-        return ipersonaService.findPersona((long)1);
+        return spersona.findPersona((long)1);
     }
 }
