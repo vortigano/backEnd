@@ -1,9 +1,9 @@
 package com.porfolio.cam.Dto;
 
 public class DtoPersona {
-    
-    private String nombre;
     private String apellido;
+    private String nombre;
+    private String subtitulo;
     private String acerca_de_mi;
     private String img_perfil;
     private String img_banner;
@@ -11,9 +11,10 @@ public class DtoPersona {
     public DtoPersona() {
     }
 
-    public DtoPersona(String nombre, String apellido, String acerca_de_mi, String img_perfil, String img_banner) {
-        this.nombre = nombre;
+    public DtoPersona(String apellido, String nombre, String subtitulo, String acerca_de_mi, String img_perfil, String img_banner) {
         this.apellido = apellido;
+        this.nombre = nombre;
+        this.subtitulo = subtitulo;
         this.acerca_de_mi = acerca_de_mi;
         this.img_perfil = img_perfil;
         this.img_banner = img_banner;
@@ -41,6 +42,14 @@ public class DtoPersona {
 
     public void setAcerca_de_mi(String acerca_de_mi) {
         this.acerca_de_mi = acerca_de_mi;
+    }
+    
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
     }
 
     public String getImg_perfil() {

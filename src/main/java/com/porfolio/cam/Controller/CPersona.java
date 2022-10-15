@@ -1,5 +1,6 @@
 package com.porfolio.cam.Controller;
 
+import com.porfolio.cam.Dto.DtoPersona;
 import com.porfolio.cam.Entity.Persona;
 import com.porfolio.cam.Service.SPersona;
 import java.text.SimpleDateFormat;
@@ -53,20 +54,16 @@ public class CPersona {
     //esto cambia el registro completo, luego necesito
     //especializar la api para cada sección
     @PutMapping("/editar/{id}")
-    public Persona editPersona(@PathVariable Long id,
-                                @RequestParam("nombre") String nuevoNombre,
-                                @RequestParam("apellido") String nuevoApellido,
-                                @RequestParam("acerca_de_mi") String nuevoAcerca,
-                                @RequestParam("img_perfil") String new_img_perfil,
-                                @RequestParam("img_banner") String new_img_banner){
+    public Persona editPersona(@PathVariable Long id, @RequestBody DtoPersona dtoPersona){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - EDITADO...");
         Persona persona = spersona.findPersona(id);
-        persona.setNombre(nuevoNombre);
-        persona.setApellido(nuevoApellido);
-        persona.setAcerca_de_mi(nuevoAcerca);
-        persona.setImg_perfil(new_img_perfil);
-        persona.setImg_banner(new_img_banner);
+        persona.setNombre(dtoPersona.getNombre());
+        persona.setApellido(dtoPersona.getApellido());
+        persona.setSubtitulo(dtoPersona.getSubtitulo());
+        persona.setAcerca_de_mi(dtoPersona.getAcerca_de_mi());
+        persona.setImg_perfil(dtoPersona.getImg_perfil());
+        persona.setImg_banner(dtoPersona.getImg_banner());
         
         spersona.savePersona(persona);
         return persona;

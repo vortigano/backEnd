@@ -11,28 +11,27 @@ public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @NotNull
-    private String nombre;
-    
     @NotNull
     private String apellido;
-    
+    @NotNull
+    private String nombre;
+    @NotNull
+    private String subtitulo;
     @NotNull
     private String acerca_de_mi;
-    
     @NotNull
     private String img_perfil;
-    
     @NotNull
     private String img_banner;
-
+    
     public Persona() {
     }
 
-    public Persona(String nombre, String apellido, String acerca_de_mi, String img_perfil, String img_banner) {
-        this.nombre = nombre;
+    public Persona(String apellido, String nombre, String sub_titulo, String acerca_de_mi, 
+            String img_perfil, String img_banner) {
         this.apellido = apellido;
+        this.nombre = nombre;
+        this.subtitulo = sub_titulo;
         this.acerca_de_mi = acerca_de_mi;
         this.img_perfil = img_perfil;
         this.img_banner = img_banner;
@@ -69,7 +68,15 @@ public class Persona {
     public void setAcerca_de_mi(String acerca_de_mi) {
         this.acerca_de_mi = acerca_de_mi;
     }
+    
+    public String getSubtitulo() {
+        return subtitulo;
+    }
 
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+    
     public String getImg_perfil() {
         return img_perfil;
     }
