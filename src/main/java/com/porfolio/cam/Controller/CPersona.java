@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/personas")
 @CrossOrigin(origins = {"${settings.cors_origin.remote}","${settings.cors_origin.local}"})
 public class CPersona {
     @Autowired SPersona spersona;
     
-    @GetMapping("personas/traer")
+    @GetMapping("/traer")
     public List<Persona> getPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - TRAYENDO...");
@@ -30,7 +32,7 @@ public class CPersona {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("personas/crear")
+    @PostMapping("/crear")
     public String createPersona(@RequestBody Persona persona){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - CREANDO...");
@@ -39,7 +41,7 @@ public class CPersona {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("personas/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public String deletePersona(@PathVariable Long id){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - BORRANDO...");
@@ -48,18 +50,23 @@ public class CPersona {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    //PUERTO/personas/editar/<id>/<nombre>&<apellido>&<img>
-    @PutMapping("personas/editar/{id}")
+    //esto cambia el registro completo, luego necesito
+    //especializar la api para cada sección
+    @PutMapping("/editar/{id}")
     public Persona editPersona(@PathVariable Long id,
                                 @RequestParam("nombre") String nuevoNombre,
                                 @RequestParam("apellido") String nuevoApellido,
-                                @RequestParam("img") String nuevaImg){
+                                @RequestParam("acerca_de_mi") String nuevoAcerca,
+                                @RequestParam("img_perfil") String new_img_perfil,
+                                @RequestParam("img_banner") String new_img_banner){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - EDITADO...");
         Persona persona = spersona.findPersona(id);
         persona.setNombre(nuevoNombre);
         persona.setApellido(nuevoApellido);
-        persona.setImg(nuevaImg);
+        persona.setAcerca_de_mi(nuevoAcerca);
+        persona.setImg_perfil(new_img_perfil);
+        persona.setImg_banner(new_img_banner);
         
         spersona.savePersona(persona);
         return persona;
