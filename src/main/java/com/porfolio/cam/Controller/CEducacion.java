@@ -71,10 +71,10 @@ public class CEducacion {
         if(!sEducacion.existsById(id)){
             return new ResponseEntity(new Mensaje("No existe el id"), HttpStatus.NOT_FOUND);
         }
-        if(sEducacion.existsByNombreE(dtoEducacion.getNombreE()) 
-                && sEducacion.getByNombreE(dtoEducacion.getNombreE()).get().getId() != id){
-            return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        }
+        //if(sEducacion.existsByNombreE(dtoEducacion.getNombreE()) 
+        //        && sEducacion.getByNombreE(dtoEducacion.getNombreE()).get().getId() != id){
+        //    return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+        //}
         if(StringUtils.isBlank(dtoEducacion.getNombreE())){
             return new ResponseEntity(new Mensaje("El campo no puede estar vacío"), HttpStatus.BAD_REQUEST);
         }
