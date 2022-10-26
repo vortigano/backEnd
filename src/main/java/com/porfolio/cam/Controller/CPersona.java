@@ -1,7 +1,8 @@
 package com.porfolio.cam.Controller;
 
+import com.porfolio.cam.Dto.DtoPersona;
 import com.porfolio.cam.Entity.Persona;
-import com.porfolio.cam.Interface.IPersonaService;
+import com.porfolio.cam.Service.SPersona;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,54 +15,57 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/personas")
 @CrossOrigin(origins = {"${settings.cors_origin.remote}","${settings.cors_origin.local}"})
-public class PersonaController {
-    @Autowired IPersonaService ipersonaService;
+public class CPersona {
+    @Autowired SPersona spersona;
     
-    @GetMapping("personas/traer")
+    @GetMapping("/traer")
     public List<Persona> getPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - TRAYENDO...");
-        return ipersonaService.getPersona();
+        return spersona.getPersona();
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("personas/crear")
+    @PostMapping("/crear")
     public String createPersona(@RequestBody Persona persona){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - CREANDO...");
-        ipersonaService.savePersona(persona);
+        spersona.savePersona(persona);
         return "La persona se creó correctamente";
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("personas/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public String deletePersona(@PathVariable Long id){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - BORRANDO...");
-        ipersonaService.deletePersona(id);
+        spersona.deletePersona(id);
         return "La persona fue eliminada correctamente";
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    //PUERTO/personas/editar/<id>/<nombre>&<apellido>&<img>
-    @PutMapping("personas/editar/{id}")
-    public Persona editPersona(@PathVariable Long id,
-                                @RequestParam("nombre") String nuevoNombre,
-                                @RequestParam("apellido") String nuevoApellido,
-                                @RequestParam("img") String nuevaImg){
+    //esto cambia el registro completo, luego necesito
+    //especializar la api para cada sección
+    @PutMapping("/editar/{id}")
+    public Persona editPersona(@PathVariable Long id, @RequestBody DtoPersona dtoPersona){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - EDITADO...");
-        Persona persona = ipersonaService.findPersona(id);
-        persona.setNombre(nuevoNombre);
-        persona.setApellido(nuevoApellido);
-        persona.setImg(nuevaImg);
+        Persona persona = spersona.findPersona(id);
+        persona.setNombre(dtoPersona.getNombre());
+        persona.setApellido(dtoPersona.getApellido());
+        persona.setSubtitulo(dtoPersona.getSubtitulo());
+        persona.setAcerca_de_mi(dtoPersona.getAcerca_de_mi());
+        persona.setImg_perfil(dtoPersona.getImg_perfil());
+        persona.setImg_banner(dtoPersona.getImg_banner());
         
-        ipersonaService.savePersona(persona);
+        spersona.savePersona(persona);
         return persona;
     }
     
@@ -70,6 +74,6 @@ public class PersonaController {
     public Persona findPersona(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - Trayendo perfil...");
-        return ipersonaService.findPersona((long)1);
+        return spersona.findPersona((long)1);
     }
 }
