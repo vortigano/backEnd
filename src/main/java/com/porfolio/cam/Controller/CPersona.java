@@ -69,6 +69,23 @@ public class CPersona {
         return persona;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/borrarAcercaDeMi/{id}")
+    public Persona borrarPersonaDescripcion(@PathVariable Long id, @RequestBody DtoPersona dtoPersona){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(formatter.format(new Date(System.currentTimeMillis())) + " - BORRANDO DESCRIPCION...");
+        Persona persona = spersona.findPersona(id);
+        persona.setNombre(dtoPersona.getNombre());
+        persona.setApellido(dtoPersona.getApellido());
+        persona.setSubtitulo(dtoPersona.getSubtitulo());
+        persona.setAcerca_de_mi("");
+        persona.setImg_perfil(dtoPersona.getImg_perfil());
+        persona.setImg_banner(dtoPersona.getImg_banner());
+        
+        spersona.savePersona(persona);
+        return persona;
+    }
+    
     //@GetMapping("personas/traer/perfil")
     @GetMapping("${api.persona_perfil.get}")
     public Persona findPersona(){
